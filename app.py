@@ -21,10 +21,9 @@ MONGO_URI= os.environ.get('MONGO_URI')
 
 cluster = MongoClient(MONGO_URI)
 
-db = cluster[""]
-col = db[""]
+db = cluster["data"]
+col = db["user_details"]
 
-app.config["POST"] = os.environ.get('MONGO_URI')
 
 @app.route("/", methods=["GET"])
 def startpy():
@@ -53,27 +52,34 @@ def get_last_user_id():
 
     return last_user_id
 
-@app.route("/submit", methods=["POST"])
-def submit(request_json):
-    user_id = request_json["user_id"]
-    name     = request.form.get("name")
-    email    = request.form.get("email")
-    regno    = request.form.get("regno")
-    dept     = request.form.get("dept")
-    year     = request.form.get("year")
 
-    result   = {
-        "user_id"  : user_id ,
-        "Name"     : name ,
-        "Email"    : email , 
-        "Regno"    : regno , 
-        "Dept"     : dept,
-        "year"     : year
-    }
+@app.route("/data/submit", methods=["POST"])
+def submit():
+
+        last_user_id = get_last_user_id()
+
+        current_user_id = last_user_id + 1
+
+        name     = request.form.get("name")
+        email    = request.form.get("email")
+        regno    = request.form.get("regno")
+        dept     = request.form.get("dept")
+        year     = request.form.get("year")
+
+        result   = {
+            "user_id"  : current_user_id ,
+            "Name"     : name ,
+            "Email"    : email , 
+            "Regno"    : regno , 
+            "Dept"     : dept,
+            "year"     : year
+        }
+
+        col.insert_one(result)
     
+        return render_template("data.html")
 
-
-
+    
 
 
 if __name__ == "__main__":
