@@ -28,7 +28,7 @@ user_col = db["user_details"]
 @app.route("/", methods=["GET"])
 def startpy():
 
-    return render_template("data1.html") 
+    return render_template("add-user-personal-details.html") 
 
 def get_user_id(user_id):
 
@@ -90,10 +90,46 @@ def submit():
     
         return render_template("data.html")
 
+@app.route('/all_details',methods=["GET"])
+def all_details():
+    
+    user_details =[]
+    for user in user_col.find():
+        user_id     = user["user_id"]
+        Name        = user['Name']
+        Surname     = user['Surname']
+        Birthdate   = user['Birthdate']
+        Street      = user['Street']
+        City        = user['City']
+        Postcode    = user['Postcode']
+        Country     = user['Country']
+        Email       = user['Email']
+        Phone       = user['Phone']
+        Mobile      = user['Mobile']
+
+
+        result = {
+            'Name'      : Name,
+            'Surname'   : Surname,
+            'Birthdate' : Birthdate,
+            'Street'    : Street,
+            'City'      : City,
+            'Postcode'  : Postcode,
+            'Country'   : Country,
+            'Email'     : Email,
+            'Phone'     : Phone,
+            'Mobile'    : Mobile
+
+        }
+        user_details.append(result)
+    # print(details)
+    return render_template("user_details.html",result = user_details)
+
 @app.route("/data/edit", methods=["GET","POST"])
 def view():
 
     data = user_col.find()
+
 
 
 
