@@ -60,16 +60,16 @@ def submit():
 
         current_user_id = last_user_id + 1
 
-        name     = request.form.get("name")
-        surname    = request.form.get("surname")
-        bdate    = request.form.get("bdate")
-        street     = request.form.get("street")
-        city    = request.form.get("city")
-        postcode    = request.form.get("postcode")
-        country     = request.form.get("country")
+        name      = request.form.get("name")
+        surname   = request.form.get("surname")
+        bdate     = request.form.get("bdate")
+        street    = request.form.get("street")
+        city      = request.form.get("city")
+        postcode  = request.form.get("postcode")
+        country   = request.form.get("country")
         email     = request.form.get("email")
         phone     = request.form.get("phone")
-        mobile     = request.form.get("mobile")
+        mobile    = request.form.get("mobile")
 
         result   = {
             "user_id"  : current_user_id ,
