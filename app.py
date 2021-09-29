@@ -79,6 +79,12 @@ def submit():
     
         return render_template("data.html")
 
+@app.route("/data/view", methods=["GET"])
+def view():
+
+    data = col.find()
+    
+
     
 
 
