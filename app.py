@@ -22,13 +22,13 @@ MONGO_URI= os.environ.get('MONGO_URI')
 cluster = MongoClient(MONGO_URI)
 
 db = cluster["data"]
-col = db["user_details"]
+user_col = db["user_details"]
 
 
 @app.route("/", methods=["GET"])
 def startpy():
 
-    return render_template("index.html") 
+    return render_template("data1.html") 
 
 def get_user_id(user_id):
 
@@ -36,13 +36,13 @@ def get_user_id(user_id):
         "user_id" : int(user_id)
     }
 
-    user_id_obj = col.find_one(user_id)
+    user_id_obj = user_col.find_one(user_id)
 
     return user_id_obj
 
 def get_last_user_id():
 
-    last_user_id      = col.find().sort([('user_id', -1)]).limit(1)
+    last_user_id      = user_col.find().sort([('user_id', -1)]).limit(1)
 
     try:
         last_user_id = last_user_id[0]['user_id']
@@ -61,29 +61,41 @@ def submit():
         current_user_id = last_user_id + 1
 
         name     = request.form.get("name")
-        email    = request.form.get("email")
-        regno    = request.form.get("regno")
-        dept     = request.form.get("dept")
-        year     = request.form.get("year")
+        surname    = request.form.get("surname")
+        bdate    = request.form.get("bdate")
+        street     = request.form.get("street")
+        city    = request.form.get("city")
+        postcode    = request.form.get("postcode")
+        country     = request.form.get("country")
+        email     = request.form.get("email")
+        phone     = request.form.get("phone")
+        mobile     = request.form.get("mobile")
 
         result   = {
             "user_id"  : current_user_id ,
             "Name"     : name ,
+            "Surname"  : surname , 
+            "Birthdate": bdate , 
+            "Street"   : street,
+            "City"     : city,
+            "Postcode" : postcode ,
+            "Country"  : country ,
             "Email"    : email , 
-            "Regno"    : regno , 
-            "Dept"     : dept,
-            "year"     : year
+            "Phone"    : phone , 
+            "Mobile"   : mobile
+           
         }
 
-        col.insert_one(result)
+        user_col.insert_one(result)
     
         return render_template("data.html")
 
-@app.route("/data/view", methods=["GET"])
+@app.route("/data/edit", methods=["GET","POST"])
 def view():
 
-    data = col.find()
-    
+    data = user_col.find()
+
+
 
     
 
