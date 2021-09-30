@@ -2125,7 +2125,7 @@ p {
                   </div>
                 </div>
                 <div class="card-body">
-                  <form action="/user-details/edit/{{user.user_id}}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                
                     <h6 class="heading-small text-muted mb-4">Personal information</h6>
                     <div class="pl-lg-4">
                       <div class="row">
@@ -2203,12 +2203,10 @@ p {
                       <div class="col-lg-4">
                         <div class="form-group focused">
                           <label class="form-control-label" for="input-country">Mobile</label>
-                          <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="{{user.Mobile}}" value="{{user.Mobile}}">
+                          <input class="form-control form-control-alternative" placeholder="{{user.Mobile}}" value="{{user.Mobile}}">
                         </div>
                       </div>
-                      
-                      <button class="button" id="submit" onclick="document.location='default.asp'">Register</button>
-                  </form>
+                                  
                 </div>
               </div>
             </div>

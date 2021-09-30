@@ -90,7 +90,7 @@ def submit():
     
         return render_template("data.html", user_id = current_user_id)
 
-@app.route('/all_details',methods=["GET"])
+@app.route('/all_users/admin',methods=["GET"])
 def all_details():
     
     user_details =[]
@@ -124,7 +124,9 @@ def all_details():
         }
         user_details.append(result)
     # print(details)
-    return render_template("user_details.html",result = user_details)
+    return render_template("all-users.html",result = user_details)
+
+
 
 @app.route("/find/user-details/<user_id>", methods=["GET"])
 def find(user_id):
