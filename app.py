@@ -88,7 +88,7 @@ def submit():
 
         user_col.insert_one(result)
     
-        return render_template("data.html")
+        return render_template("data.html", user_id = current_user_id)
 
 @app.route('/all_details',methods=["GET"])
 def all_details():
@@ -109,6 +109,7 @@ def all_details():
 
 
         result = {
+            'user_id'   : user_id,
             'Name'      : Name,
             'Surname'   : Surname,
             'Birthdate' : Birthdate,
@@ -125,10 +126,70 @@ def all_details():
     # print(details)
     return render_template("user_details.html",result = user_details)
 
-@app.route("/data/edit", methods=["GET","POST"])
-def view():
+@app.route("/find/user-details/<user_id>", methods=["GET"])
+def find(user_id):
+    
+    print(user_id)
+    mydata=[]
+    myquery = {"user_id": int(user_id) }
+ 
+    for mydoc in user_col.find(myquery):
+        mydata.append(mydoc)
 
-    data = user_col.find()
+    result = mydata
+    print(mydata)
+    return render_template('user_details.html', result = result, user_id = user_id)
+
+@app.route("/edit/user-details/<user_id>", methods=["GET"])
+def find_data(user_id):
+    
+    print(user_id)
+    mydata=[]
+    myquery = {"user_id": int(user_id) }
+ 
+    for mydoc in user_col.find(myquery):
+        mydata.append(mydoc)
+
+    result = mydata
+    print(mydata)
+    return render_template('edit-user-personal-details.html', result = result, user_id = user_id)
+
+@app.route('/user-details/edit/<user_id>',methods=['POST'])
+def details_edit(user_id):
+    print(user_id)
+    
+    name      = request.form.get("name")
+    surname   = request.form.get("surname")
+    bdate     = request.form.get("bdate")
+    street    = request.form.get("street")
+    city      = request.form.get("city")
+    postcode  = request.form.get("postcode")
+    country   = request.form.get("country")
+    email     = request.form.get("email")
+    phone     = request.form.get("phone")
+    mobile    = request.form.get("mobile")
+ 
+    result = {
+            "user_id"   : int(user_id),
+            'Name'      : name,
+             'Surname'   : surname,
+            'Birthdate' : bdate,
+            'Street'    : street,
+            'City'      : city,
+            'Postcode'  : postcode,
+            'Country'   : country,
+            'Email'     : email,
+            'Phone'     : phone,
+            'Mobile'    : mobile
+
+        }
+    print(result)
+    user_col.update({"user_id":int(user_id)},{'$set':result})
+
+
+
+ 
+    return render_template("success.html")
 
 
 
