@@ -130,8 +130,7 @@ def all_details():
 
 @app.route("/find/user-details/<user_id>", methods=["GET"])
 def find(user_id):
-    
-    print(user_id)
+ 
     mydata=[]
     myquery = {"user_id": int(user_id) }
  
@@ -139,7 +138,7 @@ def find(user_id):
         mydata.append(mydoc)
 
     result = mydata
-    print(mydata)
+
     return render_template('user_details.html', result = result, user_id = user_id)
 
 @app.route("/edit/user-details/<user_id>", methods=["GET"])
@@ -153,7 +152,7 @@ def find_data(user_id):
         mydata.append(mydoc)
 
     result = mydata
-    print(mydata)
+
     return render_template('edit-user-personal-details.html', result = result, user_id = user_id)
 
 @app.route('/user-details/edit/<user_id>',methods=['POST'])
@@ -185,7 +184,7 @@ def details_edit(user_id):
             'Mobile'    : mobile
 
         }
-    print(result)
+
     user_col.update({"user_id":int(user_id)},{'$set':result})
 
 
